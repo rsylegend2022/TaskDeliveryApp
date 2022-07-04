@@ -1,0 +1,4 @@
+#Sun Jul 03 23:02:39 CST 2022
+base.0=/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/build/intermediates/dex/debug/mergeDexDebug/out
+renamed.0=classes.dex
+path.0=classes.dex

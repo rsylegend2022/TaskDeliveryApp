@@ -1,0 +1,62 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3 Copyright 2014 The Android Open Source Project
+4
+5 Licensed under the Apache License, Version 2.0 (the "License");
+6 you may not use this file except in compliance with the License.
+7 You may obtain a copy of the License at
+8
+9     http://www.apache.org/licenses/LICENSE-2.0
+10
+11 Unless required by applicable law or agreed to in writing, software
+12 distributed under the License is distributed on an "AS IS" BASIS,
+13 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+14 See the License for the specific language governing permissions and
+15 limitations under the License.
+16-->
+17<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+18    package="com.example.android.recyclerview"
+19    android:versionCode="1"
+20    android:versionName="1.0" >
+21
+22    <uses-sdk
+23        android:minSdkVersion="14"
+23-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml
+24        android:targetSdkVersion="28" />
+24-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml
+25
+26    <!-- Min/target SDK versions (<uses-sdk>) managed by build.gradle -->
+27    <application
+27-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:25:5-37:19
+28        android:allowBackup="true"
+28-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:25:18-44
+29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+29-->[androidx.core:core:1.1.0-alpha05] /Users/zhe/.gradle/caches/transforms-2/files-2.1/24558c26923077826ff9d003c072365f/core-1.1.0-alpha05/AndroidManifest.xml:22:18-86
+30        android:debuggable="true"
+31        android:icon="@drawable/ic_launcher"
+31-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:27:9-45
+32        android:label="@string/app_name"
+32-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:26:9-41
+33        android:testOnly="true"
+34        android:theme="@style/Theme.AppCompat.Light" >
+34-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:28:9-53
+35        <activity
+35-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:30:9-36:20
+36            android:name="com.example.android.recyclerview.MainActivity"
+36-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:30:19-47
+37            android:label="@string/app_name" >
+37-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:31:19-51
+38            <intent-filter>
+38-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:32:13-35:29
+39                <action android:name="android.intent.action.MAIN" />
+39-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:33:17-69
+39-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:33:25-66
+40
+41                <category android:name="android.intent.category.LAUNCHER" />
+41-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:34:17-77
+41-->/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/src/main/AndroidManifest.xml:34:27-74
+42            </intent-filter>
+43        </activity>
+44    </application>
+45
+46</manifest>

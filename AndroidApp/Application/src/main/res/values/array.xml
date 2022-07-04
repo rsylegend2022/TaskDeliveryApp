@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="taskType">
+        <item> Water </item>
+        <item> Harvest </item>
+        <item> Plant </item>
+    </string-array>
+
+    <string-array name="taskUrgency">
+        <item> Low </item>
+        <item> Mid </item>
+        <item> High </item>
+    </string-array>
+    
+</resources>
