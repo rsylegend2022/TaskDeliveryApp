@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neo.mapper.TaskMapper" >
+    <resultMap id="BaseResultMap" type="com.neo.model.Task" >
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="urgency" property="urgency" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="workload" property="workload" jdbcType="VARCHAR"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="owner" property="owner" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        name, description, address, type, urgency, status, workload, creator, owner
+    </sql>
+
+    <select id="selectTasksInCriteria" parameterType="com.neo.model.SearchCriteria" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM task
+        <where>
+            <if test="inCriteria != null and inCriteria.size() > 0">
+                <foreach collection="inCriteria" item="criterion" index="criterionIndex" open="" close="" separator="">
+                    <if test="criterion.values != null and criterion.values.size() > 0">
+                        and ${criterion.columnName} in
+                        <foreach collection="criterion.values" item="item" index="index" open="(" close=")" separator=",">
+                            #{item}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.neo.model.Task" >
+        INSERT INTO
+        task
+        (name,description,address,type,urgency,status,workload,creator,owner)
+        VALUES
+        (#{name}, #{description}, #{address}, #{type}, #{urgency}, #{status}, #{workload}, #{creator}, #{owner})
+    </insert>
+
+</mapper>
