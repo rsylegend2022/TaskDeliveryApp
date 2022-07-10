@@ -26,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
@@ -43,15 +44,33 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     Button creatTask;
+    Boolean asVolunteer;
+    String userName;
+    TextView userNameView;
+    TextView userRoleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        if (null != intent) { //Null Checking
+            userName = intent.getStringExtra("userName");
+            asVolunteer = intent.getBooleanExtra("userRole", false);
+        }
 
         creatTask=(Button)findViewById(R.id.createNewTask);
         tabLayout=(TabLayout)findViewById(R.id.tabLayout);
         viewPager=(ViewPager)findViewById(R.id.viewPager);
+        userNameView=(TextView)findViewById(R.id.userNameInMain);
+        userRoleView=(TextView)findViewById(R.id.userRoleInMain);
+
+        userNameView.setText(userName);
+        if (asVolunteer) {
+            userRoleView.setText("Volunteer");
+        } else {
+            userRoleView.setText("LandOwner");
+        }
 
         tabLayout.addTab(tabLayout.newTab().setText("Tasks Available"));
         tabLayout.addTab(tabLayout.newTab().setText("Tasks In Progress"));
@@ -80,14 +99,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // starts a new activity to create a new task
-        creatTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplication(), CreateTaskActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (asVolunteer) {
+            creatTask.setVisibility(View.GONE);
+        } else {
+            // starts a new activity to create a new task
+            creatTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplication(), CreateTaskActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

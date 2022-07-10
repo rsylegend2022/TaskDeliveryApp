@@ -16,15 +16,22 @@ package com.example.android.recyclerview;
  * limitations under the License.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.android.RetrofitApi.APIClient;
+import com.example.android.RetrofitApi.APIInterface;
+import com.example.android.RetrofitApi.POJO.Task;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
@@ -57,25 +64,43 @@ public class CreateTaskActivity extends AppCompatActivity {
         taskType = (Spinner) findViewById(R.id.taskType);
         taskWorkload = (EditText) findViewById(R.id.taskWorkload);
         createButton = (Button) findViewById(R.id.elevatedButton);
-
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TaskHolder newTask = new TaskHolder(taskName.getText().toString(),
+                Task newTask = new Task(taskName.getText().toString(),
                         taskDescription.getText().toString(),
                         taskAddress.getText().toString(),
                         taskType.getSelectedItem().toString(),
                         taskUrgency.getSelectedItem().toString(),
                         taskWorkload.getText().toString(),
-                        TaskStatus.Created, "Demo User", "Demo User");
+                        TaskStatus.Created, UserWrapper.getInstance().getName(), "null");
                 createTask(newTask);
-                finish();
             }
         });
+
     }
 
-    private void createTask(TaskHolder newTask) {
-        TaskHolderWapper.getInstance().addTask(newTask);
+    private void createTask(Task newTask) {
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<Integer> call1 = apiInterface.createTask(newTask);
+        call1.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                Integer resCode = response.body();
+                if (resCode == 200) {
+                    Toast.makeText(getApplicationContext(), "Successfully created new task", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Created new task failed. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                call.cancel();
+            }
+        });
+        //TaskHolderWapper.getInstance().addTask(newTask);
     }
 
 

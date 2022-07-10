@@ -24,9 +24,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.example.android.RetrofitApi.APIClient;
+import com.example.android.RetrofitApi.APIInterface;
+import com.example.android.RetrofitApi.POJO.Task;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Demonstrates the use of {@link RecyclerView} with a {@link LinearLayoutManager} and a
@@ -53,16 +62,13 @@ public class RecyclerViewFragment extends Fragment {
     protected CustomAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected TextView textView;
-    protected TaskHolder[] mDataset;
+    protected List<Task> mDataset;
     private String type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments().getString("Type");
-        System.out.println("!!!!!!!!!!!!!" + type);
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
         initDataset();
     }
 
@@ -93,25 +99,6 @@ public class RecyclerViewFragment extends Fragment {
         mAdapter = new CustomAdapter(mDataset);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
-        // END_INCLUDE(initializeRecyclerView)
-        /*
-        mLinearLayoutRadioButton = (RadioButton) rootView.findViewById(R.id.linear_layout_rb);
-        mLinearLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setRecyclerViewLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER);
-            }
-        });
-
-        mGridLayoutRadioButton = (RadioButton) rootView.findViewById(R.id.grid_layout_rb);
-        mGridLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setRecyclerViewLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER);
-            }
-        });
-         */
-
         return rootView;
     }
 
@@ -120,7 +107,7 @@ public class RecyclerViewFragment extends Fragment {
         super.onResume();
         System.out.println("###########" + type);
         initDataset();
-        mAdapter.notifyDataSetChanged();
+        //mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -167,12 +154,27 @@ public class RecyclerViewFragment extends Fragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        mDataset = TaskHolderWapper.getInstance().getTasks();
-        if (mAdapter != null && type.equals("all")) {
-            if (mDataset.length > 0) {
-                textView.setVisibility(View.GONE);
-            }
-            mAdapter.setmDataSet(mDataset);
+        //mDataset = TaskHolderWapper.getInstance().getTasks();
+        if (mAdapter != null & type.equals("all")) {
+            APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+            Call<List<Task>> call1 = apiInterface.doGetListTasks();
+            call1.enqueue(new Callback<List<Task>>() {
+                @Override
+                public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                    mDataset = response.body();
+                    if (mDataset.size() > 0) {
+                        textView.setVisibility(View.GONE);
+                    }
+                    mAdapter.setmDataSet(mDataset);
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<List<Task>> call, Throwable t) {
+                    call.cancel();
+                }
+            });
         }
     }
+
 }
