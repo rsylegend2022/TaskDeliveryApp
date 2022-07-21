@@ -1,6 +1,6 @@
 #Internal package file, do not edit.
-#Sat Jul 02 20:15:54 CST 2022
-0.base=/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/build/intermediates/dex/debug/mergeDexDebug/out
+#Mon Jul 18 21:38:27 CST 2022
+0.base=/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/build/intermediates/transforms/dexMerger/debug/0
 0.path=classes.dex
 count=1
 0.baseType=DIRECTORY

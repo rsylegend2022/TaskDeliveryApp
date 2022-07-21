@@ -19,13 +19,17 @@ package com.example.android.recyclerview;
 import com.example.android.RetrofitApi.POJO.Task;
 import com.example.android.common.logger.Log;
 
+import android.app.Application;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +49,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView taskName;
-        private final TextView taskDescription;
+        //private final TextView taskDescription;
         private final TextView taskAddress;
         private final TextView taskType;
         private final TextView taskEmergency;
-        private final TextView taskStatus;
-        private final TextView taskWorkload;
+        private final ImageView itemImage;
+        //private final TextView taskStatus;
+        //private final TextView taskWorkload;
 
         public ViewHolder(View v) {
             super(v);
@@ -62,27 +67,37 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 }
             });
             taskName = (TextView) v.findViewById(R.id.textView);
-            taskDescription = (TextView) v.findViewById(R.id.Description);
+            //taskDescription = (TextView) v.findViewById(R.id.Description);
             taskAddress = (TextView) v.findViewById(R.id.Address);
             taskType = (TextView) v.findViewById(R.id.Type);
             taskEmergency = (TextView) v.findViewById(R.id.Emergency);
-            taskStatus = (TextView) v.findViewById(R.id.Status);
-            taskWorkload = (TextView) v.findViewById(R.id.Workload);
+            itemImage = (ImageView) v.findViewById(R.id.itemImage);
+            //taskStatus = (TextView) v.findViewById(R.id.Status);
+            //taskWorkload = (TextView) v.findViewById(R.id.Workload);
         }
 
 
         public void setData(Task taskHolder) {
             taskName.setText(taskHolder.name);
-            taskDescription.setText(taskHolder.description);
+            //taskDescription.setText(taskHolder.description);
             taskAddress.setText(taskHolder.address);
             taskType.setText(taskHolder.type);
+            if (taskHolder.type.equals("Water")) {
+                itemImage.setImageDrawable(ContextCompat.getDrawable(itemImage.getContext(), R.drawable.ic_baseline_wash_24));
+            } else if (taskHolder.type.equals("Plant")) {
+                itemImage.setImageDrawable(ContextCompat.getDrawable(itemImage.getContext(), R.drawable.ic_baseline_grass_24));
+            } else {
+                itemImage.setImageDrawable(ContextCompat.getDrawable(itemImage.getContext(), R.drawable.ic_baseline_spa_24));
+            }
             taskEmergency.setText(taskHolder.urgency);
+            /*
             taskWorkload.setText(taskHolder.workload);
             if (taskHolder.status != null) {
                 taskStatus.setText(taskHolder.status.toString());
             } else {
                 taskStatus.setText("null");
             }
+             */
         }
 
         /*
@@ -141,13 +156,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             public void onClick(View view) {
                 //Toast.makeText(view.getContext(), "clicked on ", Toast.LENGTH_SHORT).show();
                 Intent mIntent = new Intent(view.getContext(), AcceptTaskActivity.class);
-                mIntent.putExtra("taskName", viewHolder.taskName.getText().toString());
-                mIntent.putExtra("taskDescription", viewHolder.taskDescription.getText().toString());
-                mIntent.putExtra("taskAddress", viewHolder.taskAddress.getText().toString());
-                mIntent.putExtra("taskType", viewHolder.taskType.getText().toString());
-                mIntent.putExtra("taskEmergency", viewHolder.taskEmergency.getText().toString());
-                mIntent.putExtra("taskWorkload", viewHolder.taskWorkload.getText().toString());
-                mIntent.putExtra("taskStatus", viewHolder.taskStatus.getText().toString());
+                mIntent.putExtra("taskName", mDataSet.get(position).name);
+                mIntent.putExtra("taskDescription", mDataSet.get(position).description);
+                mIntent.putExtra("taskAddress", mDataSet.get(position).address);
+                mIntent.putExtra("taskType", mDataSet.get(position).type);
+                mIntent.putExtra("taskEmergency", mDataSet.get(position).urgency);
+                mIntent.putExtra("taskWorkload", mDataSet.get(position).workload);
+                mIntent.putExtra("taskStatus", mDataSet.get(position).status);
                 view.getContext().startActivity(mIntent);
             }
         });

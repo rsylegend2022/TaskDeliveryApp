@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.KwabenBerko:OpenWeatherMap-Android-Library:2.1.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/42760b222ded2d71e8cf0e07686d0ba9/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/42760b222ded2d71e8cf0e07686d0ba9/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/42760b222ded2d71e8cf0e07686d0ba9/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

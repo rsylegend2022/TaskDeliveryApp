@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
+            "outputFile": "/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/Users/zhe/.gradle/caches/transforms-2/files-2.1/2d37acdb128ceddd7bbbfd4f231b4a66/res/values-v24/values-v24.xml",
+                    "source": "/Users/zhe/.gradle/caches/transforms-2/files-2.1/c632e310c4d96194b5ed61605d7401bb/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/zhe/.gradle/caches/transforms-2/files-2.1/5506b670439eab400c69c616efae3139/res/values-v24/values-v24.xml",
+                    "source": "/Users/zhe/.gradle/caches/transforms-2/files-2.1/ab882b6fc51c25c47ccb0eeb27281940/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

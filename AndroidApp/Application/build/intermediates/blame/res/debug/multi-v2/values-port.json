@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/zhe/my_work/views-widgets-samples/RecyclerView/Application/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
+            "outputFile": "/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "/Users/zhe/.gradle/caches/transforms-2/files-2.1/2d37acdb128ceddd7bbbfd4f231b4a66/res/values-port/values-port.xml",
+                    "source": "/Users/zhe/.gradle/caches/transforms-2/files-2.1/c632e310c4d96194b5ed61605d7401bb/res/values-port/values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

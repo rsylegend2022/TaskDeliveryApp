@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RecyclerView.iml" filepath="$PROJECT_DIR$/.idea/modules/RecyclerView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application/RecyclerView.Application.iml" filepath="$PROJECT_DIR$/.idea/modules/Application/RecyclerView.Application.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application/RecyclerView.Application.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/Application/RecyclerView.Application.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application/RecyclerView.Application.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Application/RecyclerView.Application.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application/RecyclerView.Application.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/Application/RecyclerView.Application.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidApp.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application/AndroidApp.Application.iml" filepath="$PROJECT_DIR$/.idea/modules/Application/AndroidApp.Application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application/AndroidApp.Application.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/Application/AndroidApp.Application.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application/AndroidApp.Application.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Application/AndroidApp.Application.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application/AndroidApp.Application.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/Application/AndroidApp.Application.unitTest.iml" />
     </modules>
   </component>
 </project>

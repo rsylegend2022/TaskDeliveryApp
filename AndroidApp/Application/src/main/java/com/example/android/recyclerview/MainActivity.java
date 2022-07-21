@@ -17,12 +17,25 @@
 
 package com.example.android.recyclerview;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
+import com.example.android.common.logger.Log;
+import com.google.android.material.tabs.TabLayout;
+import com.kwabenaberko.openweathermaplib.implementation.OpenWeatherMapHelper;
+import com.kwabenaberko.openweathermaplib.implementation.callback.CurrentWeatherCallback;
+import com.kwabenaberko.openweathermaplib.model.currentweather.CurrentWeather;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +43,7 @@ import android.widget.TextView;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
- * {@link android.support.v4.app.Fragment} which can display a view.
+ * {@link Fragment} which can display a view.
  * <p>
  * For devices with displays with a width of 720dp or greater, the sample log is always visible,
  * on other devices it's visibility is controlled by an item on the Action Bar.
@@ -48,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
     String userName;
     TextView userNameView;
     TextView userRoleView;
+    TextView location;
+    TextView weather;
+    MyAdapter adapter;
+    int LOCATION_REFRESH_TIME = 15000; // 15 seconds to update
+    int LOCATION_REFRESH_DISTANCE = 0; // 500 meters to update
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +82,22 @@ public class MainActivity extends AppCompatActivity {
         viewPager=(ViewPager)findViewById(R.id.viewPager);
         userNameView=(TextView)findViewById(R.id.userNameInMain);
         userRoleView=(TextView)findViewById(R.id.userRoleInMain);
+        location=(TextView)findViewById(R.id.locationContent);
+        weather=(TextView)findViewById(R.id.weatherContent);
 
         userNameView.setText(userName);
         if (asVolunteer) {
-            userRoleView.setText("Volunteer");
+            userRoleView.setText("[Volunteer]");
         } else {
-            userRoleView.setText("LandOwner");
+            userRoleView.setText("[LandOwner]");
         }
 
-        tabLayout.addTab(tabLayout.newTab().setText("Tasks Available"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tasks Created"));
         tabLayout.addTab(tabLayout.newTab().setText("Tasks In Progress"));
         tabLayout.addTab(tabLayout.newTab().setText("Tasks Finished"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final MyAdapter adapter = new MyAdapter(this,getSupportFragmentManager(), tabLayout.getTabCount()-1);
+        adapter = new MyAdapter(this,getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -86,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                //((RecyclerViewFragment)adapter.getItem(tab.getPosition())).initDataset();
             }
 
             @Override
@@ -111,6 +132,83 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        LocationListener mLocationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(final Location location) {
+                //your code here
+                registerWeatherLocation(location.getAltitude(), location.getLongitude());
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED) {
+
+            LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
+                    LOCATION_REFRESH_DISTANCE, mLocationListener);
+
+        } else {
+            ActivityCompat.requestPermissions(this, new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION },
+                    0);
+            LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
+                    LOCATION_REFRESH_DISTANCE, mLocationListener);
+        }
+    }
+
+    private void registerWeatherLocation(double lat, double lon) {
+        OpenWeatherMapHelper helper = new OpenWeatherMapHelper("fe280a48196925671f24f3bd141e76ab");
+        helper.getCurrentWeatherByGeoCoordinates(lat, lon, new CurrentWeatherCallback() {
+            @Override
+            public void onSuccess(CurrentWeather currentWeather) {
+                System.out.println("Coordinates: " + currentWeather.getCoord().getLat() + ", "+currentWeather.getCoord().getLon() +"\n"
+                        +"Weather Description: " + currentWeather.getWeather() + "\n"
+                        +"Temperature: " + currentWeather.getMain().getTempMax()+"\n"
+                        +"Wind Speed: " + currentWeather.getWind().getSpeed() + "\n"
+                        +"City, Country: " + currentWeather.getName() + ", " + currentWeather.getSys().getCountry()
+                );
+                double currTemp =  currentWeather.getMain().getTempMax() - 273.15;
+                weather.setText(currentWeather.getWeather().get(0).getDescription() + ", " + String.format("%.2f", currTemp) + "℃");
+                if (currentWeather.getName().equals("")) {
+                    location.setText("London");
+                } else {
+                    location.setText(currentWeather.getName());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                Log.v(TAG, throwable.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((RecyclerViewFragment)adapter.getItem(0)).initDataset();
     }
 
     @Override

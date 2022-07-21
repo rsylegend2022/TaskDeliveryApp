@@ -16,14 +16,15 @@ package com.example.android.recyclerview;
  * limitations under the License.
  */
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.android.RetrofitApi.APIClient;
 import com.example.android.RetrofitApi.APIInterface;
@@ -35,7 +36,7 @@ import retrofit2.Response;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
- * {@link android.support.v4.app.Fragment} which can display a view.
+ * {@link Fragment} which can display a view.
  * <p>
  * For devices with displays with a width of 720dp or greater, the sample log is always visible,
  * on other devices it's visibility is controlled by an item on the Action Bar.

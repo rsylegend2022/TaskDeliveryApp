@@ -17,10 +17,10 @@
 package com.example.android.recyclerview;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,12 +64,12 @@ public class RecyclerViewFragment extends Fragment {
     protected TextView textView;
     protected List<Task> mDataset;
     private String type;
+    private static Integer count = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments().getString("Type");
-        initDataset();
     }
 
     @Override
@@ -99,6 +99,11 @@ public class RecyclerViewFragment extends Fragment {
         mAdapter = new CustomAdapter(mDataset);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
+        //count += 1;
+        if (count == 0) {
+            initDataset();
+        }
+        count += 1;
         return rootView;
     }
 
@@ -106,8 +111,24 @@ public class RecyclerViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
         System.out.println("###########" + type);
-        initDataset();
+        //count += 1;
+        //initDataset();
         //mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        count = 0;
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean userVisibleHint){
+        super.setUserVisibleHint(userVisibleHint);
+        if (getUserVisibleHint()) {
+            initDataset();
+        }
     }
 
     /**
@@ -153,27 +174,74 @@ public class RecyclerViewFragment extends Fragment {
      * Generates Strings for RecyclerView's adapter. This data would usually come
      * from a local content provider or remote server.
      */
-    private void initDataset() {
-        //mDataset = TaskHolderWapper.getInstance().getTasks();
-        if (mAdapter != null & type.equals("all")) {
-            APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-            Call<List<Task>> call1 = apiInterface.doGetListTasks();
-            call1.enqueue(new Callback<List<Task>>() {
-                @Override
-                public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
-                    mDataset = response.body();
-                    if (mDataset.size() > 0) {
-                        textView.setVisibility(View.GONE);
-                    }
-                    mAdapter.setmDataSet(mDataset);
-                    mAdapter.notifyDataSetChanged();
-                }
+    public void initDataset() {
+        if (mAdapter != null) {
+            switch (type) {
+                case "all":
+                    System.out.println("!@@@!@@!@@" + type);
+                    APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+                    Call<List<Task>> call1 = apiInterface.doGetListTasksStatus("Created");
+                    call1.enqueue(new Callback<List<Task>>() {
+                        @Override
+                        public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                            mDataset = response.body();
+                            if (mDataset.size() > 0) {
+                                textView.setVisibility(View.GONE);
+                            }
+                            mAdapter.setmDataSet(mDataset);
+                            mAdapter.notifyDataSetChanged();
+                            onResume();
+                        }
 
-                @Override
-                public void onFailure(Call<List<Task>> call, Throwable t) {
-                    call.cancel();
-                }
-            });
+                        @Override
+                        public void onFailure(Call<List<Task>> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
+                    break;
+                case "progress":
+                    System.out.println("!@@@!@@!@@" + type);
+                    APIInterface apiInter = APIClient.getClient().create(APIInterface.class);
+                    Call<List<Task>> call = apiInter.doGetListTasksStatus("InProgress");
+                    call.enqueue(new Callback<List<Task>>() {
+                        @Override
+                        public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                            mDataset = response.body();
+                            if (mDataset.size() > 0) {
+                                textView.setVisibility(View.GONE);
+                            }
+                            mAdapter.setmDataSet(mDataset);
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Task>> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
+                    break;
+                case "finished":
+                    System.out.println("!@@@!@@!@@" + type);
+                    APIInterface apiInterFinished = APIClient.getClient().create(APIInterface.class);
+                    Call<List<Task>> callFinished = apiInterFinished.doGetListTasksStatus("Finished");
+                    callFinished.enqueue(new Callback<List<Task>>() {
+                        @Override
+                        public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                            mDataset = response.body();
+                            if (mDataset.size() > 0) {
+                                textView.setVisibility(View.GONE);
+                            }
+                            mAdapter.setmDataSet(mDataset);
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Task>> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
+                    break;
+            }
         }
     }
 

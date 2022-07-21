@@ -2,9 +2,9 @@ package com.example.android.recyclerview;
 
 
 public enum TaskStatus {
-    Created("created", 1),
-    InProgress("in_progress", 2),
-    Finished("finished", 3);
+    Created("Created", 1),
+    InProgress("InProgress", 2),
+    Finished("Finished", 3);
 
     private final String literal;
     private final Integer code;
