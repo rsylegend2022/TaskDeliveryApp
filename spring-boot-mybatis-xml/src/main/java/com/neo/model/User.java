@@ -24,11 +24,11 @@ public class User implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		User user = (User) o;
-		return role == user.role && Objects.equals(name, user.name) && Objects.equals(password, user.password);
+		return Objects.equals(name, user.name) && Objects.equals(password, user.password);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, password, role);
+		return Objects.hash(name, password);
 	}
 }

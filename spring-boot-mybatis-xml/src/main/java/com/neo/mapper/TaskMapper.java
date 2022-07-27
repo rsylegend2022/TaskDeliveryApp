@@ -11,4 +11,8 @@ public interface TaskMapper {
     List<Task> selectTasksInCriteria(SearchCriteria searchCriteria);
 
     void insert(Task task);
+
+    void acceptTask(String taskName);
+
+    void finishTask(String taskName);
 }

@@ -43,4 +43,12 @@
         (#{name}, #{description}, #{address}, #{type}, #{urgency}, #{status}, #{workload}, #{creator}, #{owner})
     </insert>
 
+    <update id="acceptTask" parameterType="java.lang.String">
+        update task set status = 'InProgress' where name = #{taskName}
+    </update>
+
+    <update id="finishTask" parameterType="java.lang.String">
+        update task set status = 'Finished' where name = #{taskName}
+    </update>
+
 </mapper>

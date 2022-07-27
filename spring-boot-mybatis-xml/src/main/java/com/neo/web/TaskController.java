@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,30 @@ public class TaskController {
             criteria.put("creator", List.of(creator.get()));
         }
         return selectTasks(criteria);
+    }
+
+    @RequestMapping(value="/acceptTask", method= RequestMethod.PATCH)
+    public Integer acceptTasks(@RequestBody String taskName) {
+        try {
+            String taskNameNew = taskName.replace("\"", "");
+            taskMapper.acceptTask(taskNameNew);
+            return 200;
+        } catch (Exception e) {
+            System.out.println(e);
+            return 500;
+        }
+    }
+
+    @RequestMapping(value="/finishTask", method= RequestMethod.PATCH)
+    public Integer finishTasks(@RequestBody String taskName) {
+        try {
+            String taskNameNew = taskName.replace("\"", "");
+            taskMapper.finishTask(taskNameNew);
+            return 200;
+        } catch (Exception e) {
+            System.out.println(e);
+            return 500;
+        }
     }
 
     // criteria : area -> list of requirements
