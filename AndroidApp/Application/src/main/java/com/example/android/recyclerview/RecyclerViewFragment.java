@@ -178,7 +178,6 @@ public class RecyclerViewFragment extends Fragment {
         if (mAdapter != null) {
             switch (type) {
                 case "all":
-                    System.out.println("!@@@!@@!@@" + type);
                     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
                     Call<List<Task>> call1 = apiInterface.doGetListTasksStatus("Created");
                     call1.enqueue(new Callback<List<Task>>() {
@@ -200,7 +199,6 @@ public class RecyclerViewFragment extends Fragment {
                     });
                     break;
                 case "progress":
-                    System.out.println("!@@@!@@!@@" + type);
                     APIInterface apiInter = APIClient.getClient().create(APIInterface.class);
                     Call<List<Task>> call = apiInter.doGetListTasksStatus("InProgress");
                     call.enqueue(new Callback<List<Task>>() {
@@ -221,7 +219,6 @@ public class RecyclerViewFragment extends Fragment {
                     });
                     break;
                 case "finished":
-                    System.out.println("!@@@!@@!@@" + type);
                     APIInterface apiInterFinished = APIClient.getClient().create(APIInterface.class);
                     Call<List<Task>> callFinished = apiInterFinished.doGetListTasksStatus("Finished");
                     callFinished.enqueue(new Callback<List<Task>>() {

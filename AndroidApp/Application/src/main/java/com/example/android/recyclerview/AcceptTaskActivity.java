@@ -53,29 +53,63 @@ public class AcceptTaskActivity extends AppCompatActivity {
             taskWorkload.setText(taskWorkloadInput);
         }
 
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-                Call<Integer> call1 = apiInterface.acceptTasks(taskName.getText().toString());
-                call1.enqueue(new Callback<Integer>() {
+        if (RoleWrapper.getInstance().getRoleIsVolunteer()) {
+            if (RoleWrapper.getInstance().getTaskMode() == 0) {
+                createButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        Integer resCode = response.body();
-                        if (resCode == 200) {
-                            Toast.makeText(getApplicationContext(), "Successfully accepted new task", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Accept new task failed. Please check your internet connection.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    public void onClick(View view) {
+                        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+                        Call<Integer> call1 = apiInterface.acceptTasks(taskName.getText().toString());
+                        call1.enqueue(new Callback<Integer>() {
+                            @Override
+                            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                Integer resCode = response.body();
+                                if (resCode == 200) {
+                                    Toast.makeText(getApplicationContext(), "Successfully accepted new task", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Accept new task failed. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
-                        call.cancel();
+                            @Override
+                            public void onFailure(Call<Integer> call, Throwable t) {
+                                call.cancel();
+                            }
+                        });
                     }
                 });
+            } else if (RoleWrapper.getInstance().getTaskMode() == 1) {
+                createButton.setText("finish task");
+                createButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+                        Call<Integer> call1 = apiInterface.finishTask(taskName.getText().toString());
+                        call1.enqueue(new Callback<Integer>() {
+                            @Override
+                            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                Integer resCode = response.body();
+                                if (resCode == 200) {
+                                    Toast.makeText(getApplicationContext(), "Successfully finish this task", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Finish task failed. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Integer> call, Throwable t) {
+                                call.cancel();
+                            }
+                        });
+                    }
+                });
+            } else {
+                createButton.setVisibility(View.GONE);
             }
-        });
+        } else {
+            createButton.setVisibility(View.GONE);
+        }
     }
 }

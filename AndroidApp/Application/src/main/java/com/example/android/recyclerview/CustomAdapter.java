@@ -99,23 +99,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             }
              */
         }
-
-        /*
-        @Override
-        public void onClick(View v) {
-            System.out.println("has been clicked!!!!!");
-            Intent mIntent = new Intent(v.getContext(), CreateTaskActivity.class);
-            mIntent.putExtra("taskName", taskName.getText().toString());
-            mIntent.putExtra("taskDescription", taskDescription.getText().toString());
-            mIntent.putExtra("taskAddress", taskAddress.getText().toString());
-            mIntent.putExtra("taskType", taskType.getText().toString());
-            mIntent.putExtra("taskEmergency", taskEmergency.getText().toString());
-            mIntent.putExtra("taskWorkload", taskWorkload.getText().toString());
-            mIntent.putExtra("taskStatus", taskStatus.getText().toString());
-            v.getContext().startActivity(mIntent);
-        }
-
-         */
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
 

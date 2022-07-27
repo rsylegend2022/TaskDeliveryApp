@@ -5,29 +5,42 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Use this app as :"
+        android:text="Welcome!"
+        android:textStyle="bold"
         android:gravity="center_horizontal"
-        android:textSize="40dp"
+        android:paddingTop="70dp"
+        android:textSize="60dp"
         />
+
+    <TextView
+        android:layout_marginTop="130dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please choose your role:"
+        android:gravity="center_horizontal"
+
+        android:textSize="20dp"
+        />
+
     <Button
         android:id="@+id/volunteer"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Volunteer"
         android:layout_gravity="center_horizontal"
-        android:textSize="50dp"/>
+        android:textSize="30dp"/>
 
     <Button
         android:id="@+id/landOwner"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="landowner"
         android:layout_gravity="center_horizontal"
-        android:textSize="50dp"/>
+        android:textSize="30dp"/>
 
 </LinearLayout>

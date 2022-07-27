@@ -14,12 +14,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:text="Name: "></TextView>
 
         <TextView
             android:id="@+id/taskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:text="null"></TextView>
 
     </LinearLayout>
@@ -34,12 +38,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="Description: "></TextView>
 
         <TextView
             android:id="@+id/taskDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="null"></TextView>
 
     </LinearLayout>
@@ -54,12 +60,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="Address: "></TextView>
 
         <TextView
             android:id="@+id/taskAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="null"></TextView>
 
     </LinearLayout>
@@ -69,18 +77,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="Type: "></TextView>
 
         <TextView
             android:id="@+id/taskType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="null"/>
 
     </LinearLayout>
@@ -88,19 +98,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="Urgency: "></TextView>
 
         <TextView
             android:id="@+id/taskUrgency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="null"/>
 
     </LinearLayout>
@@ -115,6 +127,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20dp"
             android:text="Workload (hours): "></TextView>
 
         <TextView
@@ -122,6 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:textSize="20dp"
             android:text="null"></TextView>
 
     </LinearLayout>

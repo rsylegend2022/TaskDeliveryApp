@@ -42,9 +42,9 @@ public class LogInActivity extends AppCompatActivity {
         signUp = (Button) findViewById(R.id.signUp);
         signIn = (Button) findViewById(R.id.signIn);
         if (asVolunteer) {
-            role.setText("volunteer");
+            role.setText("Volunteer");
         } else {
-            role.setText("land owner");
+            role.setText("Landowner");
         }
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +59,7 @@ public class LogInActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         Integer resCode = response.body();
-                        if (resCode == 200) {
+                        if (resCode != null && resCode == 200) {
                             Toast.makeText(getApplicationContext(), "Successfully sign up.", Toast.LENGTH_SHORT).show();
                             startMainActivity();
                         } else {

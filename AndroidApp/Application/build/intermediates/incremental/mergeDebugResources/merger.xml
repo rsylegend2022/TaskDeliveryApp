@@ -3649,7 +3649,7 @@
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
         <item name="android:lineSpacingMultiplier">1.2</item>
         <item name="android:shadowDy">-6.5</item>
-    </style></file><file path="/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/src/main/res/values/dimens.xml" qualifiers=""><dimen name="list_item_height">72dp</dimen></file><file path="/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/src/main/res/values/base-strings.xml" qualifiers=""><string name="app_name">RecyclerView</string><string name="intro_message">
+    </style></file><file path="/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/src/main/res/values/dimens.xml" qualifiers=""><dimen name="list_item_height">72dp</dimen></file><file path="/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/src/main/res/values/base-strings.xml" qualifiers=""><string name="app_name">TaskMonitor</string><string name="intro_message">
         <![CDATA[
         
             

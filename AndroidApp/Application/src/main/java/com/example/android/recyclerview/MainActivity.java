@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         weather=(TextView)findViewById(R.id.weatherContent);
 
         userNameView.setText(userName);
+        RoleWrapper.getInstance().setRoleIsVolunteer(asVolunteer);
         if (asVolunteer) {
             userRoleView.setText("[Volunteer]");
         } else {
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                RoleWrapper.getInstance().setTaskMode(tab.getPosition());
+                System.out.println("@@@@@@ : " + tab.getPosition());
                 viewPager.setCurrentItem(tab.getPosition());
                 //((RecyclerViewFragment)adapter.getItem(tab.getPosition())).initDataset();
             }
@@ -137,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(final Location location) {
                 //your code here
-                registerWeatherLocation(location.getAltitude(), location.getLongitude());
+                if (location.getAltitude() == 5.0) {
+                    registerWeatherLocation(55.85806, -4.25889);
+                }
             }
 
             @Override
@@ -192,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 double currTemp =  currentWeather.getMain().getTempMax() - 273.15;
                 weather.setText(currentWeather.getWeather().get(0).getDescription() + ", " + String.format("%.2f", currTemp) + "℃");
                 if (currentWeather.getName().equals("")) {
-                    location.setText("London");
+                    location.setText("Glasgow");
                 } else {
                     location.setText(currentWeather.getName());
                 }
@@ -208,13 +213,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        ((RecyclerViewFragment)adapter.getItem(0)).initDataset();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        ((RecyclerViewFragment)adapter.getItem(viewPager.getCurrentItem())).initDataset();
     }
 
 }

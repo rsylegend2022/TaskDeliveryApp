@@ -77,12 +77,14 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="right"
                         android:src="@drawable/ic_baseline_location_on_24"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/locationContent"
                         android:layout_width="match_parent"
                         android:textStyle="bold"
+                        android:layout_gravity="left"
                         android:layout_weight="1"
                         android:layout_height="match_parent"/>
                 </LinearLayout>
