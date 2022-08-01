@@ -107,9 +107,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 RoleWrapper.getInstance().setTaskMode(tab.getPosition());
-                System.out.println("@@@@@@ : " + tab.getPosition());
                 viewPager.setCurrentItem(tab.getPosition());
-                //((RecyclerViewFragment)adapter.getItem(tab.getPosition())).initDataset();
             }
 
             @Override
@@ -195,7 +193,13 @@ public class MainActivity extends AppCompatActivity {
                         +"City, Country: " + currentWeather.getName() + ", " + currentWeather.getSys().getCountry()
                 );
                 double currTemp =  currentWeather.getMain().getTempMax() - 273.15;
-                weather.setText(currentWeather.getWeather().get(0).getDescription() + ", " + String.format("%.2f", currTemp) + "℃");
+                String weatherStr = currentWeather.getWeather().get(0).getDescription();
+                if (currTemp > 30) {
+                    WeatherWrapper.getInstance().setHotStatus();
+                } else if (weatherStr.contains("rain")) {
+                    WeatherWrapper.getInstance().setColdStatus();
+                }
+                weather.setText(weatherStr + ", " + String.format("%.2f", currTemp) + "℃");
                 if (currentWeather.getName().equals("")) {
                     location.setText("Glasgow");
                 } else {

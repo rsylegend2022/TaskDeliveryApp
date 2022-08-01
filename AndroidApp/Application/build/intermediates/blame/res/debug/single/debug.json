@@ -460,10 +460,6 @@
         "source": "/Users/zhe/.gradle/caches/transforms-2/files-2.1/c632e310c4d96194b5ed61605d7401bb/res/drawable-xhdpi-v4/abc_list_focused_holo.9.png"
     },
     {
-        "merged": "/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/build/intermediates/res/merged/debug/layout-w720dp_activity_main.xml.flat",
-        "source": "/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/src/main/res/layout-w720dp/activity_main.xml"
-    },
-    {
         "merged": "/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/build/intermediates/res/merged/debug/drawable_abc_switch_thumb_material.xml.flat",
         "source": "/Users/zhe/.gradle/caches/transforms-2/files-2.1/c632e310c4d96194b5ed61605d7401bb/res/drawable/abc_switch_thumb_material.xml"
     },

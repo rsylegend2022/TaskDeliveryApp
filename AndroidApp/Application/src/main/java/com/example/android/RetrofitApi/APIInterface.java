@@ -1,6 +1,7 @@
 package com.example.android.RetrofitApi;
 
 import com.example.android.RetrofitApi.POJO.Task;
+import com.example.android.RetrofitApi.POJO.TaskPatch;
 import com.example.android.RetrofitApi.POJO.User;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface APIInterface {
     Call<List<Task>> doGetListTasksAll();
 
     @GET("/getTasks")
-    Call<List<Task>> doGetListTasksStatus(@Query("status") String status);
+    Call<List<Task>> doGetListTasksStatus(@Query("status") String status, @Query("owner") String owner, @Query("creator") String creator);
 
     @POST("/newTask")
     Call<Integer> createTask(@Body Task task);
@@ -30,8 +31,8 @@ public interface APIInterface {
     Call<Integer> newUser(@Body User user);
 
     @PATCH("/acceptTask")
-    Call<Integer> acceptTasks(@Body String taskName);
+    Call<Integer> acceptTasks(@Body TaskPatch taskPatch);
 
     @PATCH("/finishTask")
-    Call<Integer> finishTask(@Body String taskName);
+    Call<Integer> finishTask(@Body TaskPatch taskPatch);
 }

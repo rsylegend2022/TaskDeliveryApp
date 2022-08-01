@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.neo.mapper.TaskMapper" >
-    <resultMap id="BaseResultMap" type="com.neo.model.Task" >
+<mapper namespace="com.rsy.mapper.TaskMapper" >
+    <resultMap id="BaseResultMap" type="com.rsy.model.Task" >
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="description" property="description" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR"/>
@@ -17,7 +17,7 @@
         name, description, address, type, urgency, status, workload, creator, owner
     </sql>
 
-    <select id="selectTasksInCriteria" parameterType="com.neo.model.SearchCriteria" resultMap="BaseResultMap" >
+    <select id="selectTasksInCriteria" parameterType="com.rsy.model.SearchCriteria" resultMap="BaseResultMap" >
         SELECT
         <include refid="Base_Column_List" />
         FROM task
@@ -35,7 +35,7 @@
         </where>
     </select>
 
-    <insert id="insert" parameterType="com.neo.model.Task" >
+    <insert id="insert" parameterType="com.rsy.model.Task" >
         INSERT INTO
         task
         (name,description,address,type,urgency,status,workload,creator,owner)
@@ -43,12 +43,12 @@
         (#{name}, #{description}, #{address}, #{type}, #{urgency}, #{status}, #{workload}, #{creator}, #{owner})
     </insert>
 
-    <update id="acceptTask" parameterType="java.lang.String">
-        update task set status = 'InProgress' where name = #{taskName}
+    <update id="acceptTask" parameterType="com.rsy.model.TaskPatch">
+        update task set status = 'InProgress', owner = #{usrName} where name = #{taskName}
     </update>
 
-    <update id="finishTask" parameterType="java.lang.String">
-        update task set status = 'Finished' where name = #{taskName}
+    <update id="finishTask" parameterType="com.rsy.model.TaskPatch">
+        update task set status = 'Finished', owner = #{usrName} where name = #{taskName}
     </update>
 
 </mapper>

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.android.RetrofitApi.APIClient;
 import com.example.android.RetrofitApi.APIInterface;
+import com.example.android.RetrofitApi.POJO.TaskPatch;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +23,9 @@ public class AcceptTaskActivity extends AppCompatActivity {
     private TextView taskType;
     private TextView taskUrgency;
     private TextView taskWorkload;
+    private TextView taskCreator;
+    private TextView taskOwner;
+    private TextView taskOwnerPre;
     private Button createButton;
 
     @Override
@@ -35,6 +39,9 @@ public class AcceptTaskActivity extends AppCompatActivity {
         taskUrgency = (TextView) findViewById(R.id.taskUrgency);
         taskType = (TextView) findViewById(R.id.taskType);
         taskWorkload = (TextView) findViewById(R.id.taskWorkload);
+        taskCreator = (TextView) findViewById(R.id.taskCreator);
+        taskOwner = (TextView) findViewById(R.id.taskOwner);
+        taskOwnerPre = (TextView) findViewById(R.id.taskOwnerPre);
         createButton = (Button) findViewById(R.id.AcceptButton);
 
         Intent intent = getIntent();
@@ -51,6 +58,15 @@ public class AcceptTaskActivity extends AppCompatActivity {
             taskUrgency.setText(taskUrgencyInput);
             String taskWorkloadInput = intent.getStringExtra("taskWorkload");
             taskWorkload.setText(taskWorkloadInput);
+            String taskCreatorStr = intent.getStringExtra("creator");
+            taskCreator.setText(taskCreatorStr);
+            String taskOwnerStr = intent.getStringExtra("owner");
+            if (taskOwnerStr.equals("null")) {
+                taskOwnerPre.setVisibility(View.GONE);
+                taskOwner.setVisibility(View.GONE);
+            } else {
+                taskOwner.setText(taskOwnerStr);
+            }
         }
 
         if (RoleWrapper.getInstance().getRoleIsVolunteer()) {
@@ -59,7 +75,7 @@ public class AcceptTaskActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-                        Call<Integer> call1 = apiInterface.acceptTasks(taskName.getText().toString());
+                        Call<Integer> call1 = apiInterface.acceptTasks(new TaskPatch(UserWrapper.getInstance().getName(), taskName.getText().toString()));
                         call1.enqueue(new Callback<Integer>() {
                             @Override
                             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -85,7 +101,7 @@ public class AcceptTaskActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-                        Call<Integer> call1 = apiInterface.finishTask(taskName.getText().toString());
+                        Call<Integer> call1 = apiInterface.finishTask(new TaskPatch(UserWrapper.getInstance().getName(), taskName.getText().toString()));
                         call1.enqueue(new Callback<Integer>() {
                             @Override
                             public void onResponse(Call<Integer> call, Response<Integer> response) {

@@ -1166,7 +1166,6 @@ id line3
 id listMode
 id list_item
 id locationContent
-id log_fragment
 id masked
 id media_actions
 id menu_toggle_log
@@ -1198,9 +1197,7 @@ id recyclerView
 id right
 id right_icon
 id right_side
-id sample_content_fragment
 id sample_main_layout
-id sample_output
 id save_image_matrix
 id save_non_transition_alpha
 id save_scale_type
@@ -1254,8 +1251,11 @@ id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
 id taskAddress
+id taskCreator
 id taskDescription
 id taskName
+id taskOwner
+id taskOwnerPre
 id taskType
 id taskUrgency
 id taskWorkload

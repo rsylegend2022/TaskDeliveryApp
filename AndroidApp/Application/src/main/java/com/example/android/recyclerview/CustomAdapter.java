@@ -32,7 +32,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -49,13 +53,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView taskName;
-        //private final TextView taskDescription;
         private final TextView taskAddress;
         private final TextView taskType;
         private final TextView taskEmergency;
         private final ImageView itemImage;
-        //private final TextView taskStatus;
-        //private final TextView taskWorkload;
 
         public ViewHolder(View v) {
             super(v);
@@ -67,13 +68,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 }
             });
             taskName = (TextView) v.findViewById(R.id.textView);
-            //taskDescription = (TextView) v.findViewById(R.id.Description);
             taskAddress = (TextView) v.findViewById(R.id.Address);
             taskType = (TextView) v.findViewById(R.id.Type);
             taskEmergency = (TextView) v.findViewById(R.id.Emergency);
             itemImage = (ImageView) v.findViewById(R.id.itemImage);
-            //taskStatus = (TextView) v.findViewById(R.id.Status);
-            //taskWorkload = (TextView) v.findViewById(R.id.Workload);
         }
 
 
@@ -90,14 +88,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 itemImage.setImageDrawable(ContextCompat.getDrawable(itemImage.getContext(), R.drawable.ic_baseline_spa_24));
             }
             taskEmergency.setText(taskHolder.urgency);
-            /*
-            taskWorkload.setText(taskHolder.workload);
-            if (taskHolder.status != null) {
-                taskStatus.setText(taskHolder.status.toString());
-            } else {
-                taskStatus.setText("null");
-            }
-             */
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
@@ -112,6 +102,36 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     public void setmDataSet(List<Task> dataSet) {
+        Map<String, Integer> mapper = new HashMap();
+        if (WeatherWrapper.getInstance().getStatus() > 0) {
+            for (Task data : dataSet) {
+                if (data.type.equals("Water")) {
+                    if (data.urgency.equals("Low")) {
+                        data.urgency = "Mid";
+                    } else if (data.urgency.equals("Mid")) {
+                        data.urgency = "High";
+                    }
+                }
+            }
+        } else if (WeatherWrapper.getInstance().getStatus() < 0) {
+            for (Task data : dataSet) {
+                if (data.type.equals("Water")) {
+                    if (data.urgency.equals("High")) {
+                        data.urgency = "Mid";
+                    } else if (data.urgency.equals("Mid")) {
+                        data.urgency = "Low";
+                    }
+                }
+            }
+        }
+        mapper.put("Low", 1);
+        mapper.put("Mid", 2);
+        mapper.put("High", 3);
+        Collections.sort(dataSet, new Comparator<Task>(){
+            public int compare(Task o1, Task o2){
+                return mapper.get(o2.urgency) - mapper.get(o1.urgency);
+            }
+        });
         mDataSet = dataSet;
     }
 
@@ -146,6 +166,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 mIntent.putExtra("taskEmergency", mDataSet.get(position).urgency);
                 mIntent.putExtra("taskWorkload", mDataSet.get(position).workload);
                 mIntent.putExtra("taskStatus", mDataSet.get(position).status);
+                mIntent.putExtra("creator", mDataSet.get(position).creator);
+                mIntent.putExtra("owner", mDataSet.get(position).owner);
                 view.getContext().startActivity(mIntent);
             }
         });

@@ -78,7 +78,6 @@ public class CreateTaskActivity extends AppCompatActivity {
                 createTask(newTask);
             }
         });
-
     }
 
     private void createTask(Task newTask) {

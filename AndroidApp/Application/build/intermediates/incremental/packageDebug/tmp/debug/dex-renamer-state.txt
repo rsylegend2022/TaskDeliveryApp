@@ -1,4 +1,4 @@
-#Wed Jul 27 22:17:10 CST 2022
+#Mon Aug 01 22:34:36 CST 2022
 base.0=/Users/zhe/my_work/views-widgets-samples/AndroidApp/Application/build/intermediates/transforms/dexMerger/debug/0
 renamed.0=classes.dex
 path.0=classes.dex

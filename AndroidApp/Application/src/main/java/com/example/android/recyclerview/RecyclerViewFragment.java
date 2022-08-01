@@ -175,70 +175,83 @@ public class RecyclerViewFragment extends Fragment {
      * from a local content provider or remote server.
      */
     public void initDataset() {
-        if (mAdapter != null) {
-            switch (type) {
-                case "all":
-                    APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-                    Call<List<Task>> call1 = apiInterface.doGetListTasksStatus("Created");
-                    call1.enqueue(new Callback<List<Task>>() {
-                        @Override
-                        public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
-                            mDataset = response.body();
-                            if (mDataset.size() > 0) {
-                                textView.setVisibility(View.GONE);
-                            }
-                            mAdapter.setmDataSet(mDataset);
-                            mAdapter.notifyDataSetChanged();
-                            onResume();
-                        }
+        if (mAdapter == null) {
+            return;
+        }
+        String owner = null;
+        String creator = null;
+        if (RoleWrapper.getInstance().getRoleIsVolunteer()) {
+            owner = UserWrapper.getInstance().getName();
+        } else {
+            creator = UserWrapper.getInstance().getName();
+        }
 
-                        @Override
-                        public void onFailure(Call<List<Task>> call, Throwable t) {
-                            call.cancel();
-                        }
-                    });
-                    break;
-                case "progress":
-                    APIInterface apiInter = APIClient.getClient().create(APIInterface.class);
-                    Call<List<Task>> call = apiInter.doGetListTasksStatus("InProgress");
-                    call.enqueue(new Callback<List<Task>>() {
-                        @Override
-                        public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
-                            mDataset = response.body();
-                            if (mDataset.size() > 0) {
-                                textView.setVisibility(View.GONE);
-                            }
-                            mAdapter.setmDataSet(mDataset);
-                            mAdapter.notifyDataSetChanged();
-                        }
+        System.out.println(RoleWrapper.getInstance().getRoleIsVolunteer());
+        System.out.println(creator);
+        System.out.println(owner);
 
-                        @Override
-                        public void onFailure(Call<List<Task>> call, Throwable t) {
-                            call.cancel();
+        switch (type) {
+            case "all":
+                APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+                Call<List<Task>> call1 = apiInterface.doGetListTasksStatus("Created", null, creator);
+                call1.enqueue(new Callback<List<Task>>() {
+                    @Override
+                    public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                        mDataset = response.body();
+                        if (mDataset.size() > 0) {
+                            textView.setVisibility(View.GONE);
                         }
-                    });
-                    break;
-                case "finished":
-                    APIInterface apiInterFinished = APIClient.getClient().create(APIInterface.class);
-                    Call<List<Task>> callFinished = apiInterFinished.doGetListTasksStatus("Finished");
-                    callFinished.enqueue(new Callback<List<Task>>() {
-                        @Override
-                        public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
-                            mDataset = response.body();
-                            if (mDataset.size() > 0) {
-                                textView.setVisibility(View.GONE);
-                            }
-                            mAdapter.setmDataSet(mDataset);
-                            mAdapter.notifyDataSetChanged();
-                        }
+                        mAdapter.setmDataSet(mDataset);
+                        mAdapter.notifyDataSetChanged();
+                        onResume();
+                    }
 
-                        @Override
-                        public void onFailure(Call<List<Task>> call, Throwable t) {
-                            call.cancel();
+                    @Override
+                    public void onFailure(Call<List<Task>> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+                break;
+            case "progress":
+                APIInterface apiInter = APIClient.getClient().create(APIInterface.class);
+                Call<List<Task>> call = apiInter.doGetListTasksStatus("InProgress", owner, creator);
+                call.enqueue(new Callback<List<Task>>() {
+                    @Override
+                    public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                        mDataset = response.body();
+                        if (mDataset.size() > 0) {
+                            textView.setVisibility(View.GONE);
                         }
-                    });
-                    break;
-            }
+                        mAdapter.setmDataSet(mDataset);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Task>> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+                break;
+            case "finished":
+                APIInterface apiInterFinished = APIClient.getClient().create(APIInterface.class);
+                Call<List<Task>> callFinished = apiInterFinished.doGetListTasksStatus("Finished", owner, creator);
+                callFinished.enqueue(new Callback<List<Task>>() {
+                    @Override
+                    public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                        mDataset = response.body();
+                        if (mDataset.size() > 0) {
+                            textView.setVisibility(View.GONE);
+                        }
+                        mAdapter.setmDataSet(mDataset);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Task>> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+                break;
         }
     }
 
